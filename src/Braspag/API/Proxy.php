@@ -12,8 +12,8 @@ class Proxy
     public function __construct($proxy)
     {
         $this->host = $proxy['host'];
-        $this->username = $proxy['username'];
-        $this->password = $proxy['password'];
+        $this->username = $proxy['user'];
+        $this->password = $proxy['pass'];
         $this->port = $proxy['port'];
     }
 
