@@ -21,6 +21,8 @@ class Braspag
 
     private $environment;
 
+    private $proxy;
+
     /**
      * Create an instance of Braspag choosing the environment where the
      * requests will be send
@@ -33,7 +35,7 @@ class Braspag
      *            The environment: {@link Environment::production()} or
      *            {@link Environment::sandbox()}
      */
-    public function __construct(Merchant $merchant, Environment $environment = null)
+    public function __construct(Merchant $merchant, Environment $environment = null, Proxy $proxy = null)
     {
         if ($environment == null) {
             $environment = Environment::production();
@@ -41,6 +43,7 @@ class Braspag
 
         $this->merchant = $merchant;
         $this->environment = $environment;
+        $this->proxy = $proxy;
     }
 
     /**
@@ -54,7 +57,7 @@ class Braspag
      */
     public function createSale(Sale $sale)
     {
-        $createSaleRequest = new CreateSaleRequest($this->merchant, $this->environment);
+        $createSaleRequest = new CreateSaleRequest($this->merchant, $this->environment, $this->proxy);
 
         return $createSaleRequest->execute($sale);
     }
@@ -69,7 +72,7 @@ class Braspag
      */
     public function getSale($paymentId)
     {
-        $querySaleRequest = new QuerySaleRequest($this->merchant, $this->environment);
+        $querySaleRequest = new QuerySaleRequest($this->merchant, $this->environment, $this->proxy);
 
         return $querySaleRequest->execute($paymentId);
     }
@@ -84,7 +87,7 @@ class Braspag
      */
     public function getRecurrentPayment($recurrentPaymentId)
     {
-        $queryRecurrentPaymentRequest = new queryRecurrentPaymentRequest($this->merchant, $this->environment);
+        $queryRecurrentPaymentRequest = new queryRecurrentPaymentRequest($this->merchant, $this->environment, $this->proxy);
 
         return $queryRecurrentPaymentRequest->execute($recurrentPaymentId);
     }
@@ -95,7 +98,7 @@ class Braspag
      */
     public function getMerchantOrderId($merchantOrderId)
     {
-        $queryMerchantOrderIdRequest = new QueryMerchantOrderIdRequest($this->merchant, $this->environment);
+        $queryMerchantOrderIdRequest = new QueryMerchantOrderIdRequest($this->merchant, $this->environment, $this->proxy);
 
         return $queryMerchantOrderIdRequest->execute($merchantOrderId);
     }
@@ -112,7 +115,7 @@ class Braspag
      */
     public function cancelSale($paymentId, $amount = null)
     {
-        $updateSaleRequest = new UpdateSaleRequest('void', $this->merchant, $this->environment);
+        $updateSaleRequest = new UpdateSaleRequest('void', $this->merchant, $this->environment, $this->proxy);
 
         $updateSaleRequest->setAmount($amount);
 
@@ -136,7 +139,7 @@ class Braspag
      */
     public function captureSale($paymentId, $amount = null, $serviceTaxAmount = null)
     {
-        $updateSaleRequest = new UpdateSaleRequest('capture', $this->merchant, $this->environment);
+        $updateSaleRequest = new UpdateSaleRequest('capture', $this->merchant, $this->environment, $this->proxy);
 
         $updateSaleRequest->setAmount($amount);
         $updateSaleRequest->setServiceTaxAmount($serviceTaxAmount);

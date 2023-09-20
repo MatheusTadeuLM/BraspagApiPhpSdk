@@ -5,6 +5,7 @@ use Braspag\API\Request\AbstractSaleRequest;
 use Braspag\API\Environment;
 use Braspag\API\Merchant;
 use Braspag\API\Payment;
+use Braspag\API\Proxy;
 
 class UpdateSaleRequest extends AbstractSaleRequest
 {
@@ -17,9 +18,9 @@ class UpdateSaleRequest extends AbstractSaleRequest
 
     private $amount;
 
-    public function __construct($type, Merchant $merchant, Environment $environment)
+    public function __construct($type, Merchant $merchant, Environment $environment, Proxy $proxy)
     {
-        parent::__construct($merchant);
+        parent::__construct($merchant, $proxy);
 
         $this->environment = $environment;
         $this->type = $type;

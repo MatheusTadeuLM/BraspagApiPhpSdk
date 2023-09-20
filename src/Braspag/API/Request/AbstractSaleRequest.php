@@ -2,16 +2,19 @@
 namespace Braspag\API\Request;
 
 use Braspag\API\Merchant;
+use Braspag\API\Proxy;
 use Braspag\API\Sale;
 
 abstract class AbstractSaleRequest
 {
 
     private $merchant;
+    private $proxy;
 
-    public function __construct(Merchant $merchant)
+    public function __construct(Merchant $merchant, Proxy $proxy)
     {
         $this->merchant = $merchant;
+        $this->proxy = $proxy;
     }
 
     public abstract function execute($param);
@@ -60,6 +63,10 @@ abstract class AbstractSaleRequest
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_ENCODING, "");
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+        if (!is_null($this->proxy)) {
+            $this->proxy->proxyAuth($curl);
+        }
 
         $response = curl_exec($curl);
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
