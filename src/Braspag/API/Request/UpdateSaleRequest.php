@@ -18,7 +18,7 @@ class UpdateSaleRequest extends AbstractSaleRequest
 
     private $amount;
 
-    public function __construct($type, Merchant $merchant, Environment $environment, Proxy $proxy)
+    public function __construct($type, Merchant $merchant, Environment $environment, Proxy $proxy = null)
     {
         parent::__construct($merchant, $proxy);
 

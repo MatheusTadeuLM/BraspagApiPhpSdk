@@ -18,7 +18,7 @@ class QueryMerchantOrderIdRequest extends AbstractSaleRequest
 
     private $environment;
 
-    public function __construct(Merchant $merchant, Environment $environment, Proxy $proxy)
+    public function __construct(Merchant $merchant, Environment $environment, Proxy $proxy = null)
     {
         parent::__construct($merchant, $proxy);
 
