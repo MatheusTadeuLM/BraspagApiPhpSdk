@@ -11,7 +11,7 @@ abstract class AbstractSaleRequest
     private $merchant;
     private $proxy;
 
-    public function __construct(Merchant $merchant, Proxy $proxy = null)
+    public function __construct(Merchant $merchant, Proxy $proxy)
     {
         $this->merchant = $merchant;
         $this->proxy = $proxy;
